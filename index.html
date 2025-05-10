@@ -4,58 +4,108 @@
   <title>My To-Do List</title>
   <style>
     body { font-family: Arial; }
+    .container{ display: flex;flex-direction: column; align-items: center; justify-content: center; margin-top: 100px;}
     ul { list-style-type: none; padding: 0; }
-    li { padding: 8px; margin: 5px 0; background: #f2f2f2; display: flex; justify-content: space-between; }
+    .child{
+      display:flex;
+    }
+    li { padding: 8px; margin: 5px 0; background: #f2f2f2; display: flex; justify-content: space-around; }
     .done { text-decoration: line-through; color: gray; }
+   
   </style>
 </head>
 <body>
-
-  <h2>✅ My Daily To-Do List</h2>
-
+<div class="container">
+ <h2>✅ My Daily To-Do List</h2>
+ <div class="child">
   <input id="taskInput" placeholder="Enter a new task" />
   <button onclick="addTask()">Add Task</button>
+ </div>
+
+  
 
   <ul id="taskList"></ul>
 
+</div>
+ 
+
   <script>
-    function addTask() {
-      let input = document.getElementById('taskInput');
-      let taskText = input.value.trim();
 
-      if (taskText === '') {
-        alert("Please enter a task!");
-        return;
-      }
+window.onload = function() {
+  let tasks = JSON.parse(localStorage.getItem('tasklist')) || [];
 
-      let li = document.createElement('li');
+  tasks.forEach(function(taskText) {
+    let li = document.createElement('li');
 
-      // Task text span
-      let span = document.createElement('span');
-      span.textContent = taskText;
+    let span = document.createElement('span');
+    span.textContent = taskText;
 
-      // Tick button
-      let tickBtn = document.createElement('button');
-      tickBtn.textContent = '✔️';
-      tickBtn.onclick = function() {
-        span.classList.toggle('done');
-      }
-
-      // Delete button
-      let delBtn = document.createElement('button');
-      delBtn.textContent = '🗑️';
-      delBtn.onclick = function() {
-        li.remove();
-      }
-
-      li.appendChild(span);
-      li.appendChild(tickBtn);
-      li.appendChild(delBtn);
-
-      document.getElementById('taskList').appendChild(li);
-
-      input.value = ''; // Clear input
+    let tickBtn = document.createElement('button');
+    tickBtn.textContent = '✔️';
+    tickBtn.onclick = function() {
+      span.classList.toggle('done');
     }
+
+    let delBtn = document.createElement('button');
+    delBtn.textContent = '🗑️';
+    delBtn.onclick = function() {
+      li.remove();
+    }
+
+    li.appendChild(span);
+    li.appendChild(tickBtn);
+    li.appendChild(delBtn);
+
+    document.getElementById('taskList').appendChild(li);
+  });
+}
+
+  
+  function addTask() {
+  let input = document.getElementById('taskInput');
+  let taskText = input.value.trim();
+
+  if (taskText === '') {
+    alert("Please enter a task!");
+    return;
+  }
+
+  // Step 1: Get existing tasks from localStorage
+  //let tasks = JSON.parse(localStorage.getItem('tasklist')) || [];
+
+  // Step 2: Add the new task to the array
+  //tasks.push(taskText);
+
+  // Step 3: Save back to localStorage
+  localStorage.setItem('tasklist', JSON.stringify(taskText));
+
+  // Step 4: Show on the screen (same as before)
+  let li = document.createElement('li');
+
+  let span = document.createElement('span');
+  span.textContent = taskText;
+
+  let tickBtn = document.createElement('button');
+  tickBtn.textContent = '✔️';
+  tickBtn.onclick = function() {
+    span.classList.toggle('done');
+  }
+
+  let delBtn = document.createElement('button');
+  delBtn.textContent = '🗑️';
+  delBtn.onclick = function() {
+    li.remove();
+  }
+
+  li.appendChild(span);
+  li.appendChild(tickBtn);
+  li.appendChild(delBtn);
+
+  document.getElementById('taskList').appendChild(li);
+
+  input.value = ''; // Clear input
+}
+
   </script>
 
 </body>
