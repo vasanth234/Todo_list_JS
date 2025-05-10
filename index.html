@@ -77,7 +77,7 @@ window.onload = function() {
   tasks.push(taskText);
 
   // Step 3: Save back to localStorage
-  localStorage.setItem('tasklist', JSON.stringify(taskText));
+  localStorage.setItem('tasklist', JSON.stringify(tasks));
 
   // Step 4: Show on the screen (same as before)
   let li = document.createElement('li');
