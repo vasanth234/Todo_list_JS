@@ -70,11 +70,11 @@ window.onload = function() {
     return;
   }
 
-  // Step 1: Get existing tasks from localStorage
-  //let tasks = JSON.parse(localStorage.getItem('tasklist')) || [];
+   //Step 1: Get existing tasks from localStorage
+  let tasks = JSON.parse(localStorage.getItem('tasklist')) || [];
 
   // Step 2: Add the new task to the array
-  //tasks.push(taskText);
+  tasks.push(taskText);
 
   // Step 3: Save back to localStorage
   localStorage.setItem('tasklist', JSON.stringify(taskText));
