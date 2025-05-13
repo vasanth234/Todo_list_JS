@@ -209,9 +209,18 @@
           deleteTask(task.id);
         };
 
+        let editbtn=document.createElement('button');
+        editbtn.textContent = '✏️';
+        editbtn.onclick=function(){
+          edittask(task.id);
+        }
+
+
         li.appendChild(span);
         li.appendChild(tickBtn);
         li.appendChild(delBtn);
+        li.appendChild(editbtn);
+
         taskList.appendChild(li);
       });
     }
@@ -243,6 +252,19 @@
 
       renderTasks();
     }
+
+   function edittask(taskId) {
+  let tasks = JSON.parse(localStorage.getItem('tasklist')) || [];
+  let taskToEdit = tasks.find(task => task.id === taskId);
+  
+  let updatedText = prompt("Edit your task:", taskToEdit.text);
+  if (updatedText !== null && updatedText.trim() !== '') {
+    taskToEdit.text = updatedText.trim();
+    localStorage.setItem('tasklist', JSON.stringify(tasks));
+    renderTasks();
+  }
+}
+
 
     // Initial render of tasks when the page loads
     window.onload = function() {
